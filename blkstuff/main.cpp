@@ -371,7 +371,7 @@ int extract_blk(const char* in_filename, const char* out_format) {
     fclose(blk_file);
 
     uint8_t xorpad[4096] = {};
-    create_decrypt_vector(hdr.key1, data, std::min((uint64_t)hdr.block_size, sizeof(xorpad)), xorpad, sizeof(xorpad));
+    create_decrypt_vector(hdr.key1, data, std::min<uint16_t>((uint64_t)hdr.block_size, uint16_t(sizeof(xorpad))), xorpad, sizeof(xorpad));
     for (size_t i = 0; i < size; i++)
         data[i] ^= xorpad[i & 0xFFF];
     //dump_to_file("decrypted.bin", data, size);
